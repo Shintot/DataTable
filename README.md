@@ -1,7 +1,7 @@
 
-# Ta<img width="1258" alt="Capture d’écran 2024-04-13 à 00 42 58" src="https://github.com/Shintot/DataTable/assets/85890290/9cabfca3-8dbd-4178-901a-753d4de3a26f">
+<img width="1258" alt="Capture d’écran 2024-04-13 à 00 42 58" src="https://github.com/Shintot/DataTable/assets/85890290/9cabfca3-8dbd-4178-901a-753d4de3a26f">
 
-Table avec Pagination et Filtrage
+# Table avec Pagination et Filtrage
 Ce projet React illustre l'implémentation d'une table avec pagination et filtrage, utilisant Tailwind CSS pour le style. Le tableau affiche des données dynamiques et permet aux utilisateurs de filtrer et naviguer à travers des pages de résultats.
 
 ## Fonctionnalités
