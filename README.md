@@ -1,4 +1,5 @@
-# Projet Table React avec Pagination et Filtrage
+![Capture d’écran 2024-04-13 à 00.40.23.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F06%2Fckkny1v52y52wcmfs9xx6dyh0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_Pl31R1%2FCapture%20d%E2%80%99%C3%A9cran%202024-04-13%20%C3%A0%2000.40.23.png)
+# Table avec Pagination et Filtrage
 Ce projet React illustre l'implémentation d'une table avec pagination et filtrage, utilisant Tailwind CSS pour le style. Le tableau affiche des données dynamiques et permet aux utilisateurs de filtrer et naviguer à travers des pages de résultats.
 
 ## Fonctionnalités
