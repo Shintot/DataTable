@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {flexRender} from '@tanstack/react-table';
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
-import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
+import {FaDownload} from "react-icons/fa6";
 
 export function ContainerTable({className, children}) {
     return (
@@ -21,7 +20,7 @@ export function DataTable({className, children}) {
 }
 
 
-export function TableHeader({ headers, headerClassName, cellClassName, onSort, sorting }) {
+export function TableHeader({headers, headerClassName, cellClassName, onSort, sorting}) {
     return (
         <thead>
         <tr className={`text-left ${headerClassName || "bg-gray-800 text-white"}`}>
@@ -38,13 +37,14 @@ export function TableHeader({ headers, headerClassName, cellClassName, onSort, s
 }
 
 
-
 export function TableContent({data, rowClassName, cellClassName}) {
     const emptyRows = 5 - data.length;
+
     return (
         <tbody>
         {data.map((item, index) => (
-            <tr key={index} className={`border-b last:border-b-0 ${rowClassName}`}>
+            <tr key={index}
+                className={`border-b last:border-b-0 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} ${rowClassName}`}>
                 <td className={`px-6 py-4 ${cellClassName}`}>{item.firstName}</td>
                 <td className={`px-6 py-4 ${cellClassName}`}>{item.lastName}</td>
                 <td className={`px-6 py-4 ${cellClassName}`}>{item.email}</td>
@@ -53,7 +53,7 @@ export function TableContent({data, rowClassName, cellClassName}) {
             </tr>
         ))}
         {emptyRows > 0 && Array.from({length: emptyRows}).map((_, index) => (
-            <tr key={`empty-${index}`}>
+            <tr key={`empty-${index}`} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
                 <td colSpan="5" className="h-14"></td>
             </tr>
         ))}
@@ -62,7 +62,25 @@ export function TableContent({data, rowClassName, cellClassName}) {
 }
 
 
-export function SearchInput({ onSearchChange }) {
+export function MobileTable({ data, headers }) {
+    return (
+        <div className="flex flex-col space-y-2 p-2">
+            {data.map((item, index) => (
+                <div key={index} className="bg-white rounded-lg p-3 border border-gray-200">
+                    {headers.map(header => (
+                        <div key={header.key} className="py-1">
+                            <span className="text-sm text-gray-500">{header.label}:</span>
+                            <span className="text-sm text-gray-900 block ml-2">{item[header.key]}</span>
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+}
+
+
+export function SearchInput({onSearchChange}) {
     const [search, setSearch] = useState('');
 
     const handleChange = (e) => {
@@ -86,13 +104,45 @@ export function SearchInput({ onSearchChange }) {
     );
 }
 
+export function DownloadTableButton({data, headers}) {
+    const downloadCSV = () => {
+        const csvRows = [];
+        // Headers
+        const headersArray = headers.map(header => header.label);
+        csvRows.push(headersArray.join(','));
+
+        // Rows
+        data.forEach(row => {
+            const values = headers.map(header => `"${row[header.key].replace(/"/g, '""')}"`);
+            csvRows.push(values.join(','));
+        });
+
+        const csvString = csvRows.join('\n');
+        const blob = new Blob([csvString], {type: 'text/csv'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'download.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+
+    return (
+        <button onClick={downloadCSV} className="ml-5 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-900">
+            <FaDownload className="text-white"/>
+        </button>
+    );
+}
+
 
 export function TitleTable({title}) {
     return <h1 className="text-xl text-left text-gray-800 font-semibold">{title}</h1>;
 }
 
 
-export function PaginationControls({ currentPage, pageCount, onPageChange }) {
+export function PaginationControls({currentPage, pageCount, onPageChange}) {
     return (
         <div className="flex justify-between items-center mt-4">
             <button onClick={() => onPageChange(currentPage - 1)}
@@ -110,11 +160,21 @@ export function PaginationControls({ currentPage, pageCount, onPageChange }) {
     );
 }
 
-export function FilteredPaginatedTable({ data, headers }) {
+export function FilteredPaginatedTable({data, headers}) {
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
-    const [sorting, setSorting] = useState({ key: '', direction: 'asc' });
+    const [sorting, setSorting] = useState({key: '', direction: 'asc'});
     const pageSize = 5;
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
 
     useEffect(() => {
@@ -124,10 +184,10 @@ export function FilteredPaginatedTable({ data, headers }) {
     const handleSort = (key) => {
         setSorting(prev => {
             if (prev.key === key) {
-                if (prev.direction === 'desc') return { key: '', direction: '' };
-                return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
+                if (prev.direction === 'desc') return {key: '', direction: ''};
+                return {key, direction: prev.direction === 'asc' ? 'desc' : 'asc'};
             }
-            return { key, direction: 'asc' };
+            return {key, direction: 'asc'};
         });
     };
 
@@ -165,13 +225,21 @@ export function FilteredPaginatedTable({ data, headers }) {
         <ContainerTable>
             <div className="flex justify-between mb-4">
                 <TitleTable title="Mon Tableau"/>
-                <SearchInput onSearchChange={setSearch} />
+                <div className="flex">
+                    <SearchInput onSearchChange={setSearch}/>
+                    <DownloadTableButton data={currentData} headers={headers}/>
+                </div>
             </div>
-            <DataTable>
-                <TableHeader headers={headers} headerClassName="bg-gray-800 text-white" cellClassName="font-bold" onSort={handleSort} sorting={sorting} />
-                <TableContent data={currentData} rowClassName="" cellClassName="text-gray-900"/>
-            </DataTable>
-            <PaginationControls currentPage={currentPage} pageCount={pageCount} onPageChange={handlePageChange} />
+            {isMobile ? (
+                <MobileTable data={currentData} headers={headers}/>
+            ) : (
+                <DataTable>
+                    <TableHeader headers={headers} headerClassName="bg-gray-800 text-white" cellClassName="font-bold"
+                                 onSort={handleSort} sorting={sorting}/>
+                    <TableContent data={currentData} rowClassName="" cellClassName="text-gray-900"/>
+                </DataTable>
+            )}
+            <PaginationControls currentPage={currentPage} pageCount={pageCount} onPageChange={handlePageChange}/>
         </ContainerTable>
     );
 }
