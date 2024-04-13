@@ -116,9 +116,9 @@ export function FilteredPaginatedTable({ data, headers }) {
     const [sorting, setSorting] = useState({ key: '', direction: 'asc' });
     const pageSize = 5;
 
-    // Réinitialise la pagination à la première page lorsqu'une recherche est effectuée
+
     useEffect(() => {
-        setCurrentPage(0); // Remet la pagination à la première page à chaque changement de recherche
+        setCurrentPage(0);
     }, [search]);
 
     const handleSort = (key) => {
