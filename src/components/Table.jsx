@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {flexRender} from '@tanstack/react-table';
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
@@ -110,23 +110,26 @@ export function PaginationControls({ currentPage, pageCount, onPageChange }) {
     );
 }
 
-
 export function FilteredPaginatedTable({ data, headers }) {
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
     const [sorting, setSorting] = useState({ key: '', direction: 'asc' });
     const pageSize = 5;
 
-    const handleSort = (key) => {
-    setSorting(prev => {
-        if (prev.key === key) {
-            if (prev.direction === 'desc') return { key: '', direction: '' };
-            return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
-        }
-        return { key, direction: 'asc' };
-    });
-};
+    // Réinitialise la pagination à la première page lorsqu'une recherche est effectuée
+    useEffect(() => {
+        setCurrentPage(0); // Remet la pagination à la première page à chaque changement de recherche
+    }, [search]);
 
+    const handleSort = (key) => {
+        setSorting(prev => {
+            if (prev.key === key) {
+                if (prev.direction === 'desc') return { key: '', direction: '' };
+                return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
+            }
+            return { key, direction: 'asc' };
+        });
+    };
 
     const sortedData = useMemo(() => {
         let sortableData = [...data.filter(item =>
