@@ -6,7 +6,14 @@ import {
 } from "./components/Table";
 
 function App() {
-    const headers = ['Prénom', 'Nom', 'Email', 'Infos', 'Nom d’utilisateur'];
+const headers = [
+    { key: 'firstName', label: 'Prénom' },
+    { key: 'lastName', label: 'Nom' },
+    { key: 'email', label: 'Email' },
+    { key: 'infos', label: 'Infos' },
+    { key: 'username', label: 'Nom d’utilisateur' }
+];
+
 
     const data = [
         {
