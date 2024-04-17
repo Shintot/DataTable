@@ -10,33 +10,27 @@ Ce projet React illustre l'implémentation d'une table avec pagination et filtra
 - **Pagination** : Navigation paginée pour parcourir les données lorsqu'elles dépassent le nombre de rangées défini par page.
 - **Style Moderne** : Utilisation de Tailwind CSS pour un design responsive et moderne.
 
-## Démarrage rapide
+## Utilisation
 
-Suivez ces étapes pour configurer et exécuter le projet localement.
+Pour intégrer `FilteredPaginatedTable` dans votre projet, suivez ces étapes simples :
 
-### Prérequis
+1. **Intégration du composant** :
+   - Copiez le fichier `Table.jsx` depuis `src/components/Table/` dans le dossier de composants de votre projet.
 
-Assurez-vous d'avoir Node.js installé sur votre machine. Si ce n'est pas le cas, vous pouvez le télécharger et l'installer depuis [nodejs.org](https://nodejs.org/).
+2. **Utilisation du composant dans votre application** :
+   - Importez et utilisez le composant `FilteredPaginatedTable` dans votre application en passant les données et les en-têtes comme props :
+     ```jsx
+     import FilteredPaginatedTable from './components/FilteredPaginatedTable';
 
-### Installation
+     const data = [...]; // Vos données
+     const headers = [...]; // Les en-têtes de votre tableau
 
-1. **Clonez le dépôt** :
-   ```bash
-   git clone https://github.com/Shintot/DataTable.git
+     function exemple() {
+       return <FilteredPaginatedTable data={data} headers={headers} />;
+     }
+     ```
 
-Installez les dépendances :
+## Structure du Projet
 
-    npm install
-
-
-
-Lancez l'application :
-
-    npm start
-
-L'application sera alors accessible à l'adresse http://localhost:3000 dans votre navigateur.
-Structure du projet
-
-    src/components/Table/: Contient tous les composants liés à la table, y compris la table elle-même, l'en-tête de la table, le contenu de la table, etc.
-    src/App.js: Le composant racine qui utilise le FilteredPaginatedTable pour afficher les données.
-
+- `src/components/Table/`: Contient tous les composants liés à la table, y compris la table elle-même, l'en-tête de la table, le contenu de la table, etc.
+- `src/App.js`: Le composant racine qui utilise le `FilteredPaginatedTable` pour afficher les données.
