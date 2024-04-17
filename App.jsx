@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
-import {CiSquarePlus} from "react-icons/ci";
+import React from 'react';
 import './App.css';
 import {
     FilteredPaginatedTable,
-} from "./FilteredPaginatedTable";
+} from "./src/components/Table.jsx";
 
 function App() {
     const headers = [
@@ -14,10 +13,7 @@ function App() {
         {key: 'username', label: 'Nom d’utilisateur'},
         {key: 'age', label: 'Age'},
         {key: 'city', label: 'city'},
-        {key: 'phoneNumber', label: 'phoneNumber'}
     ];
-
-
     const data = [
         {
             firstName: 'Jean',
@@ -29,7 +25,6 @@ function App() {
             city: 'Paris',
             lastPurchaseAmount: 150,
             membershipLevel: 'Gold',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Marie',
@@ -41,7 +36,6 @@ function App() {
             city: 'Lyon',
             lastPurchaseAmount: 50,
             membershipLevel: 'Silver',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Luc',
@@ -53,7 +47,6 @@ function App() {
             city: 'Marseille',
             lastPurchaseAmount: 500,
             membershipLevel: 'Platinum',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Sophie',
@@ -65,7 +58,6 @@ function App() {
             city: 'Bordeaux',
             lastPurchaseAmount: 80,
             membershipLevel: 'Bronze',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Émilie',
@@ -77,7 +69,6 @@ function App() {
             city: 'Toulouse',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'François',
@@ -89,7 +80,6 @@ function App() {
             city: 'Nantes',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Chloé',
@@ -101,7 +91,6 @@ function App() {
             city: 'Nice',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Étienne',
@@ -113,7 +102,6 @@ function App() {
             city: 'Strasbourg',
             lastPurchaseAmount: 200,
             membershipLevel: 'Gold',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Louise',
@@ -125,7 +113,6 @@ function App() {
             city: 'Lille',
             lastPurchaseAmount: 300,
             membershipLevel: 'Silver',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'Gabriel',
@@ -137,7 +124,6 @@ function App() {
             city: 'Rennes',
             lastPurchaseAmount: 20,
             membershipLevel: 'Bronze',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'François',
@@ -149,7 +135,6 @@ function App() {
             city: 'Nantes',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
-            phoneNumber: '01 23 45 67 89'
         },
         {
             firstName: 'François',
@@ -161,16 +146,12 @@ function App() {
             city: 'Nantes',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
-            phoneNumber: '01 23 45 67 89'
         },
     ];
 
-
     return (
         <>
-            <div className="w-[1200px] mx-auto mt-8">
-                <FilteredPaginatedTable data={data} headers={headers}/>
-            </div>
+            <FilteredPaginatedTable data={data} headers={headers}/>
         </>
     );
 }
