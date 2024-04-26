@@ -216,6 +216,37 @@ export function SearchInput({onSearchChange}) {
     );
 }
 
+function IconView({data}) {
+    return (
+        <div className="flex flex-wrap justify-start items-center">
+            {data.map((item, index) => (
+                <div key={index}
+                     className="m-2 w-40 h-40 flex flex-col items-center justify-center bg-gray-100 shadow rounded">
+                    <img src={item.image} alt={`${item.firstName} ${item.lastName}`}
+                         className="w-24 h-24 rounded-full"/>
+                    <span>{item.firstName} {item.lastName}</span>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+
+function CardView({data}) {
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+            {data.map((item, index) => (
+                <div key={index} className="bg-white shadow rounded p-4">
+                    <h5 className="text-lg font-bold">{item.firstName} {item.lastName}</h5>
+                    <p>{item.email}</p>
+                    <p className="text-gray-600">{item.infos}</p>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+
 /**
  * Composant FilteredPaginatedTable qui gère une table avec filtration, tri, et pagination.
  * @param {Object} props - Les propriétés du composant.
@@ -234,27 +265,27 @@ export function FilteredPaginatedTable({data, headers}) {
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
     const [sorting, setSorting] = useState({key: '', direction: 'asc'});
-    const pageSize = 5;
+    const [viewMode, setViewMode] = useState('table'); // Vue par défaut
+    const [pageSizeTable, setPageSizeTable] = useState(5);
+    const [pageSizeIcon, setPageSizeIcon] = useState(12);
+    const [pageSizeCard, setPageSizeCard] = useState(8);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
         };
-
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-
     useEffect(() => {
         setCurrentPage(0);
-    }, [search]);
+    }, [search, viewMode]);
 
     const handleSort = (key) => {
         setSorting(prev => {
             if (prev.key === key) {
-                if (prev.direction === 'desc') return {key: '', direction: ''};
                 return {key, direction: prev.direction === 'asc' ? 'desc' : 'asc'};
             }
             return {key, direction: 'asc'};
@@ -262,30 +293,38 @@ export function FilteredPaginatedTable({data, headers}) {
     };
 
     const sortedData = useMemo(() => {
-        let sortableData = [...data.filter(item =>
-            item.firstName.toLowerCase().includes(search.toLowerCase()) ||
+        return data.filter(item => item.firstName.toLowerCase().includes(search.toLowerCase()) ||
             item.lastName.toLowerCase().includes(search.toLowerCase()) ||
             item.email.toLowerCase().includes(search.toLowerCase()) ||
             item.infos.toLowerCase().includes(search.toLowerCase()) ||
             item.username.toLowerCase().includes(search.toLowerCase())
-        )];
-
-        if (sorting.key) {
-            sortableData.sort((a, b) => {
-                if (a[sorting.key] < b[sorting.key]) {
-                    return sorting.direction === 'asc' ? -1 : 1;
-                }
-                if (a[sorting.key] > b[sorting.key]) {
-                    return sorting.direction === 'asc' ? 1 : -1;
-                }
-                return 0;
-            });
-        }
-        return sortableData;
+        ).sort((a, b) => {
+            if (sorting.key && a[sorting.key] !== b[sorting.key]) {
+                return sorting.direction === 'asc' ? a[sorting.key].localeCompare(b[sorting.key]) : b[sorting.key].localeCompare(a[sorting.key]);
+            }
+            return 0;
+        });
     }, [data, search, sorting]);
 
-    const pageCount = Math.ceil(sortedData.length / pageSize);
-    const currentData = sortedData.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+    const currentData = useMemo(() => {
+        let effectivePageSize = pageSizeTable;
+        if (viewMode === 'icon') {
+            effectivePageSize = pageSizeIcon;
+        } else if (viewMode === 'card') {
+            effectivePageSize = pageSizeCard;
+        }
+        return sortedData.slice(currentPage * effectivePageSize, (currentPage + 1) * effectivePageSize);
+    }, [currentPage, sortedData, viewMode, pageSizeTable, pageSizeIcon, pageSizeCard]);
+
+    const pageCount = useMemo(() => {
+        let effectivePageSize = pageSizeTable;
+        if (viewMode === 'icon') {
+            effectivePageSize = pageSizeIcon;
+        } else if (viewMode === 'card') {
+            effectivePageSize = pageSizeCard;
+        }
+        return Math.ceil(sortedData.length / effectivePageSize);
+    }, [sortedData, viewMode, pageSizeTable, pageSizeIcon, pageSizeCard]);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -296,20 +335,31 @@ export function FilteredPaginatedTable({data, headers}) {
             <div className="flex justify-between mb-4">
                 <TitleTable title="Mon Tableau"/>
                 <div className="flex">
+                    <button className="bg-gray-800 p-3 text-white rounded mx-2 " onClick={() => setViewMode('table')}>Table</button>
+                    <button className="bg-gray-800 p-3 text-white rounded mx-2" onClick={() => setViewMode('icon')}>Icons</button>
+                    <button className="bg-gray-800 p-3 text-white rounded mx-2" onClick={() => setViewMode('card')}>Cards</button>
                     <SearchInput onSearchChange={setSearch}/>
                     <DownloadTableButton data={sortedData} headers={headers}/>
                 </div>
             </div>
-            {isMobile ? (
-                <MobileTable data={currentData} headers={headers}/>
-            ) : (
-                <DataTable>
-                    <TableHeader headers={headers} headerClassName="bg-gray-800 text-white" cellClassName="font-bold"
-                                 onSort={handleSort} sorting={sorting}/>
-                    <TableContent data={currentData} headers={headers} rowClassName="" cellClassName="text-gray-900"/>
-                </DataTable>
-            )}
+            {viewMode === 'table' ?
+                <ContainerTable className="w-[1200px] p-3 m-3">
+                    {isMobile ? (
+                        <MobileTable data={currentData} headers={headers}/>
+                    ) : (
+                        <DataTable>
+                            <TableHeader headers={headers} headerClassName="bg-gray-800 text-white"
+                                         cellClassName="font-bold"
+                                         onSort={handleSort} sorting={sorting}/>
+                            <TableContent data={currentData} headers={headers} rowClassName=""
+                                          cellClassName="text-gray-900"/>
+                        </DataTable>
+                    )}
+                </ContainerTable> : null}
+            {viewMode === 'icon' ? <IconView data={currentData}/> : null}
+            {viewMode === 'card' ? <CardView data={currentData}/> : null}
             <PaginationControls currentPage={currentPage} pageCount={pageCount} onPageChange={handlePageChange}/>
         </ContainerTable>
     );
 }
+
