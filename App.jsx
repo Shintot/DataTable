@@ -208,6 +208,30 @@ function App() {
             membershipLevel: 'Basic',
             image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
     ];
 
     return (
