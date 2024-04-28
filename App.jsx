@@ -13,6 +13,7 @@ function App() {
         {key: 'username', label: 'Nom d’utilisateur'},
         {key: 'age', label: 'Age'},
         {key: 'city', label: 'city'},
+        {key: 'image', label: 'Image'}
     ];
     const data = [
         {
@@ -25,6 +26,7 @@ function App() {
             city: 'Paris',
             lastPurchaseAmount: 150,
             membershipLevel: 'Gold',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Marie',
@@ -36,6 +38,7 @@ function App() {
             city: 'Lyon',
             lastPurchaseAmount: 50,
             membershipLevel: 'Silver',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Luc',
@@ -47,6 +50,7 @@ function App() {
             city: 'Marseille',
             lastPurchaseAmount: 500,
             membershipLevel: 'Platinum',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Sophie',
@@ -58,6 +62,7 @@ function App() {
             city: 'Bordeaux',
             lastPurchaseAmount: 80,
             membershipLevel: 'Bronze',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Émilie',
@@ -69,6 +74,7 @@ function App() {
             city: 'Toulouse',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'François',
@@ -80,6 +86,7 @@ function App() {
             city: 'Nantes',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Chloé',
@@ -91,6 +98,7 @@ function App() {
             city: 'Nice',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Étienne',
@@ -102,6 +110,7 @@ function App() {
             city: 'Strasbourg',
             lastPurchaseAmount: 200,
             membershipLevel: 'Gold',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Louise',
@@ -113,6 +122,7 @@ function App() {
             city: 'Lille',
             lastPurchaseAmount: 300,
             membershipLevel: 'Silver',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'Gabriel',
@@ -124,6 +134,7 @@ function App() {
             city: 'Rennes',
             lastPurchaseAmount: 20,
             membershipLevel: 'Bronze',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'François',
@@ -135,6 +146,7 @@ function App() {
             city: 'Nantes',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
         {
             firstName: 'François',
@@ -146,6 +158,79 @@ function App() {
             city: 'Nantes',
             lastPurchaseAmount: 0,
             membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
+        },
+        {
+            firstName: 'François',
+            lastName: 'Mercier',
+            email: 'francois.mercier@example.com',
+            infos: 'Consultation',
+            username: 'fmercier',
+            age: 40,
+            city: 'Nantes',
+            lastPurchaseAmount: 0,
+            membershipLevel: 'Basic',
+            image: 'https://res.cloudinary.com/dtx8credj/image/upload/v1685371291/visuform_z1q8vu.svg'
         },
     ];
 
@@ -157,3 +242,4 @@ function App() {
 }
 
 export default App;
+
